@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VibeRoom • AI Trip War Room</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: #09090b !important;
+        color: #fafafa !important;
+        overflow-x: hidden;
+      }
+      h1,
+      h2,
+      h3,
+      .font-display {
+        font-family: "Space Grotesk", sans-serif;
+      }
+      .glass {
+        background: rgba(24, 24, 27, 0.85) !important;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .glass-card {
+        background: linear-gradient(
+          145deg,
+          rgba(39, 39, 42, 0.85),
+          rgba(24, 24, 27, 0.92)
+        ) !important;
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .glass-card:hover {
+        border-color: rgba(244, 63, 94, 0.55);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px -10px rgba(244, 63, 94, 0.3);
+      }
+      .aurora-bg {
+        background-color: #09090b !important;
+        background-image:
+          radial-gradient(
+            circle at 15% 20%,
+            rgba(244, 63, 94, 0.26),
+            transparent 38%
+          ),
+          radial-gradient(
+            circle at 85% 15%,
+            rgba(139, 92, 246, 0.26),
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 50% 85%,
+            rgba(16, 185, 129, 0.16),
+            transparent 45%
+          ) !important;
+      }
+      input,
+      select {
+        background-color: #18181b !important;
+        color: #ffffff !important;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.18);
+        border-radius: 999px;
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen aurora-bg selection:bg-rose-500 selection:text-white"
+  >
+    <!-- FLOATING GLASS NAVBAR -->
+    <nav class="sticky top-3 z-50 max-w-7xl mx-auto px-4">
+      <div
+        class="glass rounded-2xl px-5 h-16 flex items-center justify-between shadow-2xl shadow-black/40"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-500 via-pink-500 to-violet-600 text-white flex items-center justify-center font-display font-bold text-xl shadow-lg shadow-rose-500/30"
+          >
+            ✦
+          </div>
+          <div class="flex items-center gap-2.5">
+            <span
+              class="font-display font-bold text-xl tracking-tight bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent"
+            >
+              VibeRoom
+            </span>
+            <span
+              class="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30"
+            >
+              <span
+                class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-ping"
+              ></span>
+              AI Trip War Room
+            </span>
+          </div>
+        </div>
+
+        <div id="navUserSection" class="flex items-center gap-3">
+          <span
+            id="currentUserBadge"
+            class="hidden text-xs font-bold text-zinc-200 bg-white/10 border border-white/10 px-3.5 py-1.5 rounded-full"
+          ></span>
+          <button
+            id="logoutBtn"
+            onclick="logoutUser()"
+            class="hidden text-xs font-bold text-rose-300 hover:text-white px-3.5 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/30 border border-rose-500/20 transition"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- SECTION 1: GEN-Z SPLIT HERO + GLASS AUTH -->
+    <main id="authSection" class="max-w-6xl mx-auto mt-10 px-4 pb-12">
+      <div class="grid lg:grid-cols-12 gap-8 items-center">
+        <!-- Left Aesthetic Showcase -->
+        <div class="lg:col-span-7 space-y-6">
+          <div
+            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass text-xs font-bold text-rose-300"
+          >
+            <span>🔥 No more dead group chats</span>
+            <span class="text-zinc-500">•</span>
+            <span class="text-violet-300">Built for Squads</span>
+          </div>
+
+          <h1
+            class="font-display text-4xl sm:text-6xl font-bold tracking-tight leading-[1.08] text-white"
+          >
+            Plan chaotic trips <br />
+            <span
+              class="bg-gradient-to-r from-rose-400 via-fuchsia-400 to-indigo-400 bg-clip-text text-transparent"
+            >
+              without the drama.
+            </span>
+          </h1>
+
+          <p
+            class="text-zinc-300 text-base sm:text-lg max-w-xl leading-relaxed"
+          >
+            Drop Airbnb villas, let AI curate your dream itinerary in 1 click,
+            upvote stays live with your gang, and auto-split every rupee.
+          </p>
+
+          <!-- Aesthetic Bento Preview Cards -->
+          <div class="grid sm:grid-cols-3 gap-3.5 pt-2">
+            <div class="glass-card rounded-2xl p-4">
+              <div class="text-2xl mb-2">🏝️</div>
+              <p class="text-xs font-bold text-white">Goa Villa • 4.9★</p>
+              <p class="text-[11px] text-emerald-400 font-semibold mt-0.5">
+                ▲ 6 Squad Votes
+              </p>
+            </div>
+            <div class="glass-card rounded-2xl p-4">
+              <div class="text-2xl mb-2">✨</div>
+              <p class="text-xs font-bold text-white">1-Click AI Planner</p>
+              <p class="text-[11px] text-violet-300 font-semibold mt-0.5">
+                Stays • Food • Vibes
+              </p>
+            </div>
+            <div class="glass-card rounded-2xl p-4">
+              <div class="text-2xl mb-2">💸</div>
+              <p class="text-xs font-bold text-white">Instant Split</p>
+              <p class="text-[11px] text-rose-300 font-semibold mt-0.5">
+                Zero awkward math
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Glass Login / Register Card -->
+        <div class="lg:col-span-5">
+          <div
+            class="glass rounded-3xl p-8 shadow-2xl shadow-rose-950/20 relative overflow-hidden"
+          >
+            <div
+              class="absolute -top-24 -right-24 w-48 h-48 bg-rose-500/20 rounded-full blur-3xl pointer-events-none"
+            ></div>
+
+            <div class="mb-6">
+              <h2 class="font-display text-2xl font-bold text-white">
+                Hop in the War Room
+              </h2>
+              <p class="text-xs text-zinc-400 mt-1">
+                Sign in to sync with your squad in real time.
+              </p>
+            </div>
+
+            <!-- Toggle Tabs -->
+            <div
+              class="grid grid-cols-2 gap-1.5 p-1 bg-zinc-900/90 border border-white/10 rounded-2xl mb-6"
+            >
+              <button
+                id="tabLogin"
+                onclick="switchAuthTab('login')"
+                class="py-2.5 text-xs font-extrabold rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow"
+              >
+                Login
+              </button>
+              <button
+                id="tabRegister"
+                onclick="switchAuthTab('register')"
+                class="py-2.5 text-xs font-extrabold rounded-xl text-zinc-400 hover:text-white transition"
+              >
+                New Account
+              </button>
+            </div>
+
+            <form
+              id="authForm"
+              onsubmit="handleAuth(event)"
+              autocomplete="off"
+              class="space-y-4"
+            >
+              <div id="nameField" class="hidden">
+                <label
+                  class="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1.5"
+                  >Your Name</label
+                >
+                <input
+                  type="text"
+                  id="authName"
+                  placeholder="e.g., Archita"
+                  class="w-full px-4 py-3 rounded-xl bg-zinc-900/80 border border-white/10 text-white placeholder-zinc-500 focus:outline-none focus:border-rose-500 text-sm"
+                />
+              </div>
+              <div>
+                <label
+                  class="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1.5"
+                  >Email Address</label
+                >
+                <input
+                  type="email"
+                  id="authEmail"
+                  required
+                  placeholder="archita@test.com"
+                  class="w-full px-4 py-3 rounded-xl bg-zinc-900/80 border border-white/10 text-white placeholder-zinc-500 focus:outline-none focus:border-rose-500 text-sm"
+                />
+              </div>
+              <div>
+                <label
+                  class="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1.5"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="authPassword"
+                  required
+                  placeholder="••••••"
+                  class="w-full px-4 py-3 rounded-xl bg-zinc-900/80 border border-white/10 text-white placeholder-zinc-500 focus:outline-none focus:border-rose-500 text-sm"
+                />
+              </div>
+              <p
+                id="authError"
+                class="text-xs text-rose-400 font-semibold hidden"
+              ></p>
+              <button
+                type="submit"
+                id="authSubmitBtn"
+                class="w-full py-3.5 rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-violet-600 hover:opacity-95 text-white font-extrabold text-sm shadow-lg shadow-rose-500/25 transition"
+              >
+                Enter Workspace &rarr;
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- SECTION 2: BENTO LOBBY (CREATE OR JOIN WAR ROOM) -->
+    <section id="lobbySection" class="hidden max-w-6xl mx-auto px-4 py-10">
+      <div class="mb-8">
+        <h1 class="font-display text-3xl font-bold text-white">
+          Your Trip Lobby ✨
+        </h1>
+        <p class="text-sm text-zinc-400 mt-1">
+          Start a fresh War Room or drop a friend's invite code to jump in.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-7">
+        <!-- Create New Trip Bento -->
+        <div class="lg:col-span-6 glass rounded-3xl p-7">
+          <div class="flex items-center gap-2.5 mb-2">
+            <span class="text-xl">🚀</span>
+            <h2 class="font-display text-xl font-bold text-white">
+              Launch New War Room
+            </h2>
+          </div>
+          <p class="text-xs text-zinc-400 mb-6">
+            Generates an instant
+            <span class="text-amber-300 font-mono font-bold">WAR-XXXXXX</span>
+            squad code.
+          </p>
+
+          <form onsubmit="handleCreateTrip(event)" class="space-y-4">
+            <input
+              type="text"
+              id="tripTitle"
+              required
+              placeholder="Trip Name (e.g., Goa NYE Escape)"
+              class="w-full px-4 py-3 rounded-xl bg-zinc-900/80 border border-white/10 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-rose-500"
+            />
+            <input
+              type="text"
+              id="tripDest"
+              required
+              placeholder="Destination (e.g., Goa, Manali, Bali)"
+              class="w-full px-4 py-3 rounded-xl bg-zinc-900/80 border border-white/10 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-rose-500"
+            />
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="text-[11px] font-bold uppercase text-zinc-400"
+                  >Start Date</label
+                >
+                <input
+                  type="date"
+                  id="tripStart"
+                  required
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900/80 border border-white/10 text-white text-sm mt-1"
+                />
+              </div>
+              <div>
+                <label class="text-[11px] font-bold uppercase text-zinc-400"
+                  >End Date</label
+                >
+                <input
+                  type="date"
+                  id="tripEnd"
+                  required
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900/80 border border-white/10 text-white text-sm mt-1"
+                />
+              </div>
+            </div>
+            <input
+              type="number"
+              id="tripBudget"
+              required
+              placeholder="Group Budget (₹ e.g., 50000)"
+              class="w-full px-4 py-3 rounded-xl bg-zinc-900/80 border border-white/10 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-rose-500"
+            />
+            <button
+              type="submit"
+              class="w-full py-3.5 rounded-xl bg-gradient-to-r from-rose-500 to-violet-600 hover:opacity-95 text-white font-extrabold text-sm shadow-lg shadow-rose-500/25 transition"
+            >
+              + Create War Room
+            </button>
+          </form>
+        </div>
+
+        <!-- Join + Active Rooms -->
+        <div class="lg:col-span-6 space-y-6">
+          <!-- Join Box -->
+          <div
+            class="rounded-3xl p-6 bg-gradient-to-br from-violet-950/70 via-zinc-900/90 to-rose-950/60 border border-violet-500/30 shadow-xl"
+          >
+            <h2 class="font-display text-lg font-bold text-white mb-1">
+              Got a Squad Invite Code? 🎟️
+            </h2>
+            <p class="text-xs text-zinc-300 mb-4">
+              Paste the code below to enter their live planning board.
+            </p>
+            <div class="flex gap-2.5">
+              <input
+                type="text"
+                id="joinCodeInput"
+                placeholder="WAR-AD143C"
+                class="flex-1 px-4 py-3 rounded-xl bg-black/50 border border-white/15 text-amber-300 font-mono font-bold text-sm uppercase placeholder-zinc-600 focus:outline-none focus:border-rose-500"
+              />
+              <button
+                onclick="handleJoinTrip()"
+                class="px-6 py-3 rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 font-extrabold text-sm transition"
+              >
+                Join
+              </button>
+            </div>
+          </div>
+
+          <!-- Active Trips List -->
+          <div class="glass rounded-3xl p-6">
+            <h3 class="font-display text-base font-bold text-white mb-4">
+              Your Active War Rooms
+            </h3>
+            <div id="myTripsList" class="space-y-3">
+              <p class="text-sm text-zinc-500">Loading your trips...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: LIVE WAR ROOM WORKSPACE -->
+    <section id="roomSection" class="hidden max-w-7xl mx-auto px-4 py-6 pb-14">
+      <!-- Neon Glass Header -->
+      <div
+        class="glass rounded-3xl p-6 mb-6 flex flex-wrap items-center justify-between gap-4 relative overflow-hidden"
+      >
+        <div
+          class="absolute -left-16 -bottom-16 w-44 h-44 bg-violet-600/20 rounded-full blur-3xl pointer-events-none"
+        ></div>
+        <div>
+          <button
+            onclick="backToLobby()"
+            class="text-xs font-bold text-zinc-400 hover:text-rose-400 mb-1.5 inline-flex items-center gap-1 transition"
+          >
+            &larr; All War Rooms
+          </button>
+          <div class="flex flex-wrap items-center gap-3">
+            <h1
+              id="roomTitle"
+              class="font-display text-2xl sm:text-3xl font-bold text-white"
+            >
+              Goa War Room
+            </h1>
+            <span
+              id="roomInviteBadge"
+              class="px-3 py-1 rounded-xl bg-amber-400/15 text-amber-300 border border-amber-400/30 font-mono text-xs font-extrabold tracking-widest"
+            >
+              WAR-XXXXXX
+            </span>
+          </div>
+          <p id="roomMeta" class="text-xs text-zinc-400 mt-1.5">
+            Destination • Dates • Budget
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3.5">
+          <div id="membersAvatars" class="flex -space-x-2"></div>
+          <button
+            onclick="triggerAiPlanner()"
+            id="aiBtn"
+            class="px-5 py-3 rounded-2xl bg-gradient-to-r from-violet-600 via-fuchsia-600 to-rose-500 hover:opacity-95 text-white font-extrabold text-xs shadow-lg shadow-fuchsia-600/30 flex items-center gap-2 transition"
+          >
+            ✨ Generate AI Itinerary
+          </button>
+        </div>
+      </div>
+
+      <!-- 12-Col Bento Grid -->
+      <div class="grid lg:grid-cols-12 gap-6">
+        <!-- LEFT 7 COLS: STAYS & ACTIVITIES VOTING -->
+        <div class="lg:col-span-7 space-y-5">
+          <div class="glass rounded-3xl p-5">
+            <h3 class="font-display text-sm font-bold text-white mb-3">
+              Drop a Stay, Vibe, or Food Spot 🔥
+            </h3>
+            <form
+              onsubmit="handleAddItem(event)"
+              class="grid sm:grid-cols-12 gap-2.5"
+            >
+              <input
+                type="text"
+                id="itemTitle"
+                required
+                placeholder="e.g., Anjuna Cliffside Airbnb Villa"
+                class="sm:col-span-5 px-3.5 py-2.5 rounded-xl bg-zinc-900/90 border border-white/10 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-rose-500"
+              />
+              <select
+                id="itemCategory"
+                class="sm:col-span-3 px-3 py-2.5 rounded-xl bg-zinc-900/90 border border-white/10 text-white text-sm focus:outline-none"
+              >
+                <option value="STAY">🏡 Stay</option>
+                <option value="ACTIVITY">🏄 Activity</option>
+                <option value="FOOD">🍕 Food</option>
+                <option value="TRANSPORT">🚕 Ride</option>
+              </select>
+              <input
+                type="number"
+                id="itemCost"
+                required
+                placeholder="₹ Cost"
+                class="sm:col-span-2 px-3 py-2.5 rounded-xl bg-zinc-900/90 border border-white/10 text-white placeholder-zinc-500 text-sm focus:outline-none"
+              />
+              <button
+                type="submit"
+                class="sm:col-span-2 py-2.5 rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 font-extrabold text-xs transition"
+              >
+                + Add
+              </button>
+            </form>
+          </div>
+
+          <!-- Voting Cards Feed -->
+          <div id="itineraryList" class="space-y-3"></div>
+        </div>
+
+        <!-- RIGHT 5 COLS: SPLITWISE + LIVE SQUAD CHAT -->
+        <div class="lg:col-span-5 space-y-6">
+          <!-- Expense Split Bento -->
+          <div class="glass rounded-3xl p-5">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-display text-sm font-bold text-white">
+                Squad Split Tracker 💸
+              </h3>
+              <span
+                id="perPersonBadge"
+                class="text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"
+              >
+                ₹0 / person
+              </span>
+            </div>
+
+            <div
+              class="grid grid-cols-2 gap-2.5 bg-black/40 border border-white/5 p-3.5 rounded-2xl mb-3.5 text-center"
+            >
+              <div>
+                <p
+                  class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider"
+                >
+                  Total Spent
+                </p>
+                <p
+                  id="totalSpentText"
+                  class="font-display text-lg font-bold text-white mt-0.5"
+                >
+                  ₹0
+                </p>
+              </div>
+              <div>
+                <p
+                  class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider"
+                >
+                  Squad Size
+                </p>
+                <p
+                  id="memberCountText"
+                  class="font-display text-lg font-bold text-violet-300 mt-0.5"
+                >
+                  1
+                </p>
+              </div>
+            </div>
+
+            <form onsubmit="handleAddExpense(event)" class="flex gap-2 mb-3">
+              <input
+                type="text"
+                id="expDesc"
+                required
+                placeholder="What for? (e.g., Scooters)"
+                class="flex-1 px-3.5 py-2 rounded-xl bg-zinc-900/90 border border-white/10 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-emerald-500"
+              />
+              <input
+                type="number"
+                id="expAmt"
+                required
+                placeholder="₹"
+                class="w-24 px-3 py-2 rounded-xl bg-zinc-900/90 border border-white/10 text-white placeholder-zinc-500 text-xs focus:outline-none"
+              />
+              <button
+                type="submit"
+                class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-extrabold text-xs transition"
+              >
+                +
+              </button>
+            </form>
+
+            <div
+              id="expenseList"
+              class="max-h-28 overflow-y-auto space-y-1.5 text-xs text-zinc-300"
+            ></div>
+          </div>
+
+          <!-- Live Chat Bento -->
+          <div class="glass rounded-3xl p-5 flex flex-col h-[370px]">
+            <div
+              class="flex items-center justify-between pb-3 border-b border-white/10"
+            >
+              <h3 class="font-display text-sm font-bold text-white">
+                Live Squad Chat 💬
+              </h3>
+              <span
+                class="flex items-center gap-1.5 text-[11px] font-bold text-emerald-400"
+              >
+                <span
+                  class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"
+                ></span>
+                Live Sync
+              </span>
+            </div>
+
+            <div
+              id="chatMessagesBox"
+              class="flex-1 overflow-y-auto py-3 space-y-2.5 text-sm"
+            >
+              <p class="text-xs text-zinc-500 text-center mt-12">
+                Drop a message to start the trip hype...
+              </p>
+            </div>
+
+            <form
+              onsubmit="handleSendChat(event)"
+              class="pt-2.5 border-t border-white/10 flex gap-2"
+            >
+              <input
+                type="text"
+                id="chatInput"
+                required
+                placeholder="Type a vibe..."
+                class="flex-1 px-4 py-2.5 rounded-xl bg-zinc-900/90 border border-white/10 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-rose-500"
+              />
+              <button
+                type="submit"
+                class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 hover:opacity-95 text-white font-extrabold text-xs transition"
+              >
+                Send
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="app.js"></script>
+  </body>
+</html>
